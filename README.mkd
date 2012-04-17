@@ -1,0 +1,90 @@
+# Upload files to browser using drag & drop (HTML5)
+
+This is a clone of the project http://code.google.com/p/html5uploader/
+
+## Java Script library exploits the potential of HTML5
+
+Manufacturers are investing in well-known browsers functionality to belong to the standards of HTML 5 and CSS 3 despite the fact that according to Philippe Le Hegareta, a representative of the W3C, the standards will not be ready for wider deployment until the middle of next year. Thanks to the activities of producers, we can now develop and test new possibilities for web applications. Among them is the ability to "drag & drop" files from the operating system to the browser.
+
+The possibility of using FileReader object to ensure the functionality of uploading files using drag & drop exists in Firefox 3.6 (Gecko> = 1.9.2), Web Kit and Google Chrome. Safari also offers a possibility to upload files using the input object site. FileReader object allows for asynchronous reading of the contents of files stored on the user computer. Readed files can be accessed through the FileList (object returned as a result of selecting files using <input> element of web site) and by object DataTransfer (returned operations as a result of a drag & drop action). Combining the use of FileReader and DataTransfer we can build an extremely intuitive images upload from your local computer to the server consisting of plain drag them from the selected folder to the web site corresponding item.
+
+Since the three mainstream market browsers: Chrome, Firefox and Safari have made available some method of downloading files but each of them in other way we decided to develop a universal class allows you to upload image files to the server. With the prepared script to a web site user interface may become more friendly and impressive.
+
+## Example of use of html5uploader library
+
+Check out the on-line demo
+
+We begin by preparing a simple HTML page 5, which will be embedded object of the class implementing drag & drop images.
+
+Three elements should be provided for legitimate content pages: a place for shifting files <div id="drop">, place the derivation of the status of operations on files <div id="status"> and place for presentation of results <div id="list"> . The fourth frame is <div id="box"> grouping elements and can be applied to the aesthetics of the presentation.
+
+The following code shows the HTML 5 page
+
+'''
+<!DOCTYPE html>  
+<html>  
+<head>  
+        <meta charset="utf-8">  
+        <title>HTML5</title>  
+        <script src="html5uploader.js"></script>  
+</head>  
+<body>  
+        <div id="box">  
+                <div id="status">Przeciągnij plik z lokalnego folderu do pojemnika ...</div>  
+                <div id="drop"></div>  
+        </div>  
+        <div id="list"></div>  
+</body>  
+</html>  
+'''
+
+The script contains the class html5uploader was hooked as a library js. We assume that the object will be created after loading the site elements. So we need to expand the body element.
+
+'''
+<body onload="new uploader('drop', 'status', '/uploader.php', 'list');">
+'''
+
+We assume that the object constructor will accept four attributes: uploader (place, status, targetPHP, show). Attribute "place" indicates the page element which will be dragged files. "Status" indicates the location of the operation status display. Downloaded files must be saved on the server so php script should be noted here making the task of recording "targetPHP". The last attribute "show" indicates the element in which the displayed images to be taken.
+
+We can skip the administration of placement status and limiting the results of the script call in the following way.
+
+uploader = new uploader('drop', null, '/uploader.php', null);
+
+## Receive files at PHP side
+
+To be able to save files downloaded by the browser needs a PHP script that saves images in the selected location. If your browser supports functions sendAsBinary () can simply use the $ FILES array and transfer the downloaded files from the temporary folder to a designated location. In other cases, use base64_decode and file_get_contents to retrieve the contents of binary files. Using file_put_contents (), create a file in the specified location of the previously downloaded content.
+
+The following code presents a simple PHP script for download files
+
+'''
+<?php
+$upload_folder = 'data';
+
+if(count($_FILES)>0) {
+        if( move_uploaded_file( $_FILES['upload']['tmp_name'] , $upload_folder.'/'.$_FILES['upload']['name'] ) ) {
+                echo 'done';
+        }
+        exit();
+} else if(isset($_GET['up'])) {
+        if(isset($_GET['base64'])) {
+                $content = base64_decode(file_get_contents('php://input'));
+        } else {
+                $content = file_get_contents('php://input');
+        }
+
+        $headers = getallheaders();
+        $headers = array_change_key_case($headers, CASE_UPPER);
+
+        if(file_put_contents($upload_folder.'/'.$headers['UP-FILENAME'], $content)) {
+                echo 'done';
+        }
+        exit();
+}
+?>
+'''
+
+That's all. You can now easy upload files from your OS to browser's window. 
+
+---
+
+LICENSE: <a href="http://www.opensource.org/licenses/bsd-license.php">New BSD License</a>
