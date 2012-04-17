@@ -40,9 +40,9 @@ The following code shows the HTML 5 page
 
 The script contains the class html5uploader was hooked as a library js. We assume that the object will be created after loading the site elements. So we need to expand the body element.
 
-'''
+```
 <body onload="new uploader('drop', 'status', '/uploader.php', 'list');">
-'''
+```
 
 We assume that the object constructor will accept four attributes: uploader (place, status, targetPHP, show). Attribute "place" indicates the page element which will be dragged files. "Status" indicates the location of the operation status display. Downloaded files must be saved on the server so php script should be noted here making the task of recording "targetPHP". The last attribute "show" indicates the element in which the displayed images to be taken.
 
@@ -56,7 +56,7 @@ To be able to save files downloaded by the browser needs a PHP script that saves
 
 The following code presents a simple PHP script for download files
 
-'''
+```
 <?php
 $upload_folder = 'data';
 
@@ -81,7 +81,7 @@ if(count($_FILES)>0) {
         exit();
 }
 ?>
-'''
+```
 
 That's all. You can now easy upload files from your OS to browser's window. 
 
