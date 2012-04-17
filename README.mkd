@@ -12,7 +12,7 @@ Since the three mainstream market browsers: Chrome, Firefox and Safari have made
 
 ## Example of use of html5uploader library
 
-Check out the on-line demo
+Check out the [on-line demo](http://www.weeby.pl/blog/html5uploader/uploader.html)
 
 We begin by preparing a simple HTML page 5, which will be embedded object of the class implementing drag & drop images.
 
