@@ -20,7 +20,7 @@ Three elements should be provided for legitimate content pages: a place for shif
 
 The following code shows the HTML 5 page
 
-'''
+<pre>
 <!DOCTYPE html>  
 <html>  
 <head>  
@@ -36,7 +36,7 @@ The following code shows the HTML 5 page
         <div id="list"></div>  
 </body>  
 </html>  
-'''
+</pre>
 
 The script contains the class html5uploader was hooked as a library js. We assume that the object will be created after loading the site elements. So we need to expand the body element.
 
